@@ -1,0 +1,6 @@
+*.diff
+*.patch
+*.swp
+*.so
+*.a
+build/
