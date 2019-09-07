@@ -34,29 +34,10 @@
 #include <math.h>
 #include <string.h>
 
-namespace MARCHING_CUBES
+namespace SURFACE_POLYGONIZATION
 {
-#ifndef BUILD_TESTS
-#define MARCHING_CUBES_FUNCTION_NOT_IMPLEMENTED(var)              \
-  std::cout << "FUNCTION_NOT_IMPLEMENTED: " << #var << std::endl; \
-  exit(0);
-#else
-#define MARCHING_CUBES_FUNCTION_NOT_IMPLEMENTED(var) std::cout << "FUNCTION_NOT_IMPLEMENTED: " << #var << std::endl;
-#endif
-
-#ifndef BUILD_TESTS
-#define MARCHING_CUBES_ABORT(var)              \
-  std::cout << "ERROR: " << #var << std::endl; \
-  exit(0);
-#else
-#define MARCHING_CUBES_ABORT(var) std::cout << "ERROR: " << #var << std::endl;
-#endif
-
-static double pi() { return atan(1) * 4; }
-
 static double VSMALL = 1e-10;
 static const double one_third = 1. / 3.;
-static const double two_thirds = 2. / 3.;
 
 /*! Check for equality within a tolerance.
  *
@@ -67,26 +48,9 @@ static const double two_thirds = 2. / 3.;
  *
  * \return number of elements.
  */
-static bool is_equal(double a, double b) { return fabs(a - b) <= VSMALL; }
-
-//! Check for equality between integers.
-static bool is_equal(int a, int b) { return a == b; }
-
-//! Check for equality between unsigned long integers.
-static bool is_equal(size_t a, size_t b) { return a == b; }
-
-//! Compute square.
 template <typename T>
-static T sqr(T a)
+static bool is_equal(const T a, const T b)
 {
-  return a * a;
+  return (static_cast<T>(fabs(a - b)) <= VSMALL);
 }
-
-//! Compute cube.
-template <typename T>
-static T cube(T a)
-{
-  return a * a * a;
-}
-
-}  // namespace MARCHING_CUBES
+}  // namespace SURFACE_POLYGONIZATION

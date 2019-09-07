@@ -12,6 +12,10 @@
 // this list of conditions and the following disclaimer in the documentation
 // and/or other materials provided with the distribution.
 //
+// 3. Neither the name of the copyright holder nor the names of its contributors
+// may be used to endorse or promote products derived from this software without
+// specific prior written permission.
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -31,7 +35,7 @@
 
 #pragma once
 
-namespace MARCHING_CUBES
+namespace SURFACE_POLYGONIZATION
 {
 // For Convention-1
 static const int edge_id_to_vertex_id_base_map[12] = {0, 1, 3, 0, 4, 5, 7, 4, 0, 1, 2, 3};
@@ -342,4 +346,4 @@ static int triangle_table[256][16] = {{-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -
                                       {0, 9, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                                       {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                                       {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
-}  // namespace MARCHING_CUBES
+}  // namespace SURFACE_POLYGONIZATION

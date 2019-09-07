@@ -12,6 +12,10 @@
 // this list of conditions and the following disclaimer in the documentation
 // and/or other materials provided with the distribution.
 //
+// 3. Neither the name of the copyright holder nor the names of its contributors
+// may be used to endorse or promote products derived from this software without
+// specific prior written permission.
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -31,14 +35,14 @@
 
 #pragma once
 
-#include "marching_cubes/utilities.h"
-#include "marching_cubes/vec3.h"
+#include "surface_polygonization/utilities.h"
+#include "surface_polygonization/vec3.h"
 
 #include <limits.h>
 #include <tuple>
 #include <vector>
 
-namespace MARCHING_CUBES
+namespace SURFACE_POLYGONIZATION
 {
 enum Mesh : unsigned int { TRIANGLES, VERTICES };
 
@@ -50,7 +54,38 @@ class Vertex
 {
  public:
   Vertex() : id(ULONG_MAX), obj_id(ULONG_MAX), pos(Vec3<T>{}), normal(Vec3<T>{}), num_shared_triangles(0) {}
+
+  Vertex(const Vertex<T>& v)
+      : id(v.id), obj_id(v.obj_id), pos(v.pos), normal(v.normal), num_shared_triangles(v.num_shared_triangles)
+  {
+  }
+
+  Vertex(Vertex<T>&& v)
+      : id(std::move(v.id)),
+        obj_id(std::move(v.obj_id)),
+        pos(std::move(v.pos)),
+        normal(std::move(v.normal)),
+        num_shared_triangles(std::move(v.num_shared_triangles))
+  {
+  }
+
   ~Vertex() {}
+
+  void operator=(const Vertex<T>& v) {
+     id = v.id;
+     obj_id = v.obj_id;
+     pos = v.pos;
+     normal = v.normal;
+     num_shared_triangles = v.num_shared_triangles;
+  }
+
+  void operator=(const Vertex<T>&& v) {
+     id = v.id;
+     obj_id = v.obj_id;
+     pos = v.pos;
+     normal = v.normal;
+     num_shared_triangles = v.num_shared_triangles;
+  }
 
   std::size_t id;                 //!< Unique id of a vertex.
   std::size_t obj_id;             //!< Reindexed id to write to obj. Index starts with 1.
@@ -73,11 +108,15 @@ class Triangle
   {
   }
 
+  Triangle(const Triangle& tr) : id(tr.id), vertex_ids(tr.vertex_ids), normal(tr.normal) {}
+
+  Triangle(Triangle&& tr) : id(std::move(tr.id)), vertex_ids(std::move(tr.vertex_ids)), normal(std::move(tr.normal)) {}
+
   ~Triangle() {}
 
-  std::size_t id;
-  Vec3<size_t> vertex_ids;
-  Vec3<T> normal;
+  std::size_t id;           //!< Id of a triangle.
+  Vec3<size_t> vertex_ids;  //!< Indices of vertices that make up a triangle.
+  Vec3<T> normal;           //!< Normal vector of a triangle.
 };
 
 template <typename T>
@@ -86,11 +125,9 @@ using TriangleVertexTuple_t = std::tuple<std::vector<Triangle<T>>, std::vector<V
 /*!
  * \class MarchingCubes
  *
- * Convention-1:
- * -------------
- *
- * V: Vertices.
- * E: Edges.
+ * - Convention-1:
+ *   + V: Vertices.
+ *   + E: Edges.
  *
  *                               ^ Y
  *                               |
@@ -127,27 +164,25 @@ using TriangleVertexTuple_t = std::tuple<std::vector<Triangle<T>>, std::vector<V
  *               Z
  *
  *
- * Edge ids from vertex ids:
- *   * Let Vi = id of `i`th vertex.
- *   *
- *     Edge number    |            Id
- *    -----------------------------------------
- *          0              V0
- *          1              V1 + 1 * offset + 1
- *          2              V3
- *          3              V0 + 1 * offset + 1
- *          4              V4
- *          5              V5 + 1 * offset + 1
- *          6              V7
- *          7              V4 + 1 * offset + 1
- *          8              V0 + 2 * offset + 2
- *          9              V1 + 2 * offset + 2
- *          10             V2 + 2 * offset + 2
- *          11             V3 + 2 * offset + 2
+ *   + Edge ids from vertex ids:
+ *     + Let Vi = id of `i`th vertex.
+ *     | Edge number    |            Id        |
+ *     |:--------------:|:--------------------:|
+ *     |    0           |  V0                  |
+ *     |    1           |  V1 + 1 * offset + 1 |
+ *     |    2           |  V3                  |
+ *     |    3           |  V0 + 1 * offset + 1 |
+ *     |    4           |  V4                  |
+ *     |    5           |  V5 + 1 * offset + 1 |
+ *     |    6           |  V7                  |
+ *     |    7           |  V4 + 1 * offset + 1 |
+ *     |    8           |  V0 + 2 * offset + 2 |
+ *     |    9           |  V1 + 2 * offset + 2 |
+ *     |    10          |  V2 + 2 * offset + 2 |
+ *     |    11          |  V3 + 2 * offset + 2 |
  *
  *
- * Convention-2: (Ref.: http://paulbourke.net/geometry/polygonise/)
- * ----------------------------------------------------------------
+ * - Convention-2: (Ref.: http://paulbourke.net/geometry/polygonise/)
  *
  *                               ^ Y
  *                               |
@@ -184,23 +219,22 @@ using TriangleVertexTuple_t = std::tuple<std::vector<Triangle<T>>, std::vector<V
  *               Z
  *
  *
- * Edge ids from vertex ids:
- *   * Let Vi = id of `i`th vertex.
- *   *
- *     Edge number    |            Id
- *    -----------------------------------------
- *          0              V0
- *          1              V1 + 2 * offset + 2
- *          2              V3
- *          3              V0 + 2 * offset + 2
- *          4              V4
- *          5              V5 + 2 * offset + 2
- *          6              V7
- *          7              V4 + 2 * offset + 2
- *          8              V0 + 1 * offset + 1
- *          9              V1 + 1 * offset + 1
- *          10             V2 + 1 * offset + 1
- *          11             V3 + 1 * offset + 1
+ *   + Edge ids from vertex ids:
+ *     + Let Vi = id of `i`th vertex.
+ *     | Edge number    |            Id        |
+ *     |:--------------:|:--------------------:|
+ *     |    0           |  V0                  |
+ *     |    1           |  V1 + 2 * offset + 2 |
+ *     |    2           |  V3                  |
+ *     |    3           |  V0 + 2 * offset + 2 |
+ *     |    4           |  V4                  |
+ *     |    5           |  V5 + 2 * offset + 2 |
+ *     |    6           |  V7                  |
+ *     |    7           |  V4 + 2 * offset + 2 |
+ *     |    8           |  V0 + 1 * offset + 1 |
+ *     |    9           |  V1 + 1 * offset + 1 |
+ *     |    10          |  V2 + 1 * offset + 1 |
+ *     |    11          |  V3 + 1 * offset + 1 |
  */
 template <typename T = float>
 class MarchingCubes
@@ -227,13 +261,11 @@ class MarchingCubes
 
   /*! Returns normalized distance of the iso-surface intersection from vertex-1.
    *
-   * Usage:
-   * ------
+   * - Usage:
    *
-   *         <--(f)--> <--(1 - f)-->
-   *  (v1) X ---------O------------- X (v2)
+   *  (v1) X <--(f)--> O <---(1 - f)---> X (v2)
    *
-   *  alpha_{O} = (1 - f) * alpha_{v1} + f * alpha_{v2}.
+   * \f$\alpha_{O} = (1 - f) * \alpha_{v1} + f * \alpha_{v2}\f$.
    *
    * \param alpha1 value of a scalar at vertex-1.
    * \param alpha2 value of a scalar at vertex-2.
@@ -261,4 +293,4 @@ class MarchingCubes
                                      const size_t triangle_start_id, const std::vector<T>& scalars,
                                      const std::vector<Vec3<T>>& normals, const T iso_alpha);
 };
-}  // namespace MARCHING_CUBES
+}  // namespace SURFACE_POLYGONIZATION

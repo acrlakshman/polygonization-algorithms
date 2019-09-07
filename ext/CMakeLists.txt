@@ -29,15 +29,3 @@ IF (NOT TARGET gtest)
     gtest_force_shared_crt
     gtest_hide_internal_symbols)
 ENDIF()
-
-#SET(CompilerFlags
-  #CMAKE_CXX_FLAGS CMAKE_CXX_FLAGS_DEBUG CMAKE_CXX_FLAGS_RELEASE
-  #CMAKE_C_FLAGS CMAKE_C_FLAGS_DEBUG CMAKE_C_FLAGS_RELEASE
-  #YAML_CPP_INCLUDE_DIR
-  #SPDLOG_INCLUDE_DIR
-  #FILESYSTEM_INCLUDE_DIR
-  #)
-
-#FOREACH(CompilerFlag ${CompilerFlags})
-  #SET(${CompilerFlag} "${${CompilerFlag}}" PARENT_SCOPE)
-#ENDFOREACH()

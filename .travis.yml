@@ -28,9 +28,9 @@ before_install:
 script:
     - mkdir -p build
     - cd build
-    - CC=$INSTALL_CC CXX=$INSTALL_CXX cmake ../ -DBUILD_COVERAGE:BOOL=ON -DBUILD_DOCUMENTATION:BOOL=ON
+    - CC=$INSTALL_CC CXX=$INSTALL_CXX cmake ../ -DSP_BUILD_COVERAGE:BOOL=ON -DSP_BUILD_DOCUMENTATION:BOOL=ON
     - make -j 4
-    - ./marching_cubes_examples && ctest -R sp_unit_tests --output-on-failure
+    - ./surface_polygonization_examples && ctest -R sp_unit_tests --output-on-failure
 
 after_success:
     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then

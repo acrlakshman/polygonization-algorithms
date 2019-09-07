@@ -33,7 +33,7 @@
 
 #include <iostream>
 
-#include "marching_cubes/vec3.h"
+#include "surface_polygonization/vec3.h"
 
 namespace EXAMPLES
 {
@@ -83,7 +83,7 @@ class Mat3
    *
    * \return Vec3.
    */
-  const MARCHING_CUBES::Vec3<T> dot(const MARCHING_CUBES::Vec3<T> vec) const;
+  const SURFACE_POLYGONIZATION::Vec3<T> dot(const SURFACE_POLYGONIZATION::Vec3<T> vec) const;
 
   /*! Overloaded subscript operator that returns a reference.
    *

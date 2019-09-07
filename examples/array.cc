@@ -1,5 +1,5 @@
 ///////////////////////////////////////////////////////////////////////////////
-// Copyright 2019 Lakshman Anumolu, Raunak Bardia.
+// Copyright 2019 Lakshman Anumolu.
 //
 // Redistribution and use in source and binary forms, with or without
 // modification, are permitted provided that the following conditions are
@@ -67,9 +67,9 @@ const T_GRID& EXAMPLES::Array<T_GRID, T_ARRAY>::grid() const
 }
 
 template <typename T_GRID, typename T_ARRAY>
-const MARCHING_CUBES::Vec3<int> EXAMPLES::Array<T_GRID, T_ARRAY>::numCells() const
+const SURFACE_POLYGONIZATION::Vec3<int> EXAMPLES::Array<T_GRID, T_ARRAY>::numCells() const
 {
-  return MARCHING_CUBES::Vec3<int>(m_nx, m_ny, m_nz);
+  return SURFACE_POLYGONIZATION::Vec3<int>(m_nx, m_ny, m_nz);
 }
 
 template <typename T_GRID, typename T_ARRAY>
@@ -99,13 +99,13 @@ T_ARRAY& EXAMPLES::Array<T_GRID, T_ARRAY>::operator()(const int i, const int j, 
 }
 
 template <typename T_GRID, typename T_ARRAY>
-const T_ARRAY& EXAMPLES::Array<T_GRID, T_ARRAY>::operator()(const MARCHING_CUBES::Vec3<int> node_id) const
+const T_ARRAY& EXAMPLES::Array<T_GRID, T_ARRAY>::operator()(const SURFACE_POLYGONIZATION::Vec3<int> node_id) const
 {
   return m_data[m_grid.index(node_id)];
 }
 
 template <typename T_GRID, typename T_ARRAY>
-T_ARRAY& EXAMPLES::Array<T_GRID, T_ARRAY>::operator()(const MARCHING_CUBES::Vec3<int> node_id)
+T_ARRAY& EXAMPLES::Array<T_GRID, T_ARRAY>::operator()(const SURFACE_POLYGONIZATION::Vec3<int> node_id)
 {
   return m_data[m_grid.index(node_id)];
 }
@@ -118,5 +118,5 @@ void EXAMPLES::Array<T_GRID, T_ARRAY>::operator=(const EXAMPLES::Array<T_GRID, T
 
 template class EXAMPLES::Array<EXAMPLES::Grid<float, 3>, float>;
 template class EXAMPLES::Array<EXAMPLES::Grid<double, 3>, double>;
-template class EXAMPLES::Array<EXAMPLES::Grid<float, 3>, MARCHING_CUBES::Vec3<float>>;
-template class EXAMPLES::Array<EXAMPLES::Grid<double, 3>, MARCHING_CUBES::Vec3<double>>;
+template class EXAMPLES::Array<EXAMPLES::Grid<float, 3>, SURFACE_POLYGONIZATION::Vec3<float>>;
+template class EXAMPLES::Array<EXAMPLES::Grid<double, 3>, SURFACE_POLYGONIZATION::Vec3<double>>;
