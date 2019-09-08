@@ -64,11 +64,11 @@ class Vec3
 
   /*! Copy constructor.
    */
-  Vec3(const Vec3<T>& v);
+  Vec3(const Vec3<T> &v);
 
   /*! Move constructor.
    */
-  Vec3(Vec3<T>&& v);
+  Vec3(Vec3<T> &&v);
 
   /*! Default constructor.
    */
