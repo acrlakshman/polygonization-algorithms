@@ -12,6 +12,10 @@
 // this list of conditions and the following disclaimer in the documentation
 // and/or other materials provided with the distribution.
 //
+// 3. Neither the name of the copyright holder nor the names of its contributors
+// may be used to endorse or promote products derived from this software without
+// specific prior written permission.
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -25,24 +29,24 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "marching_cubes/marching_cubes.h"
-#include "marching_cubes/tables.h"
+#include "surface_polygonization/marching_cubes.h"
+#include "surface_polygonization/tables.h"
 
 #include <iostream>
 
 template <typename T>
-MARCHING_CUBES::MarchingCubes<T>::MarchingCubes()
+SURFACE_POLYGONIZATION::MarchingCubes<T>::MarchingCubes()
 {
 }
 
 template <typename T>
-MARCHING_CUBES::MarchingCubes<T>::~MarchingCubes()
+SURFACE_POLYGONIZATION::MarchingCubes<T>::~MarchingCubes()
 {
 }
 
 template <typename T>
-std::vector<size_t> MARCHING_CUBES::MarchingCubes<T>::vertexToEdgeIds(const std::size_t offset,
-                                                                      const std::vector<size_t>& vertex_ids)
+std::vector<size_t> SURFACE_POLYGONIZATION::MarchingCubes<T>::vertexToEdgeIds(const std::size_t offset,
+                                                                              const std::vector<size_t>& vertex_ids)
 {
   std::vector<size_t> edge_ids(12);
 
@@ -55,7 +59,8 @@ std::vector<size_t> MARCHING_CUBES::MarchingCubes<T>::vertexToEdgeIds(const std:
 }
 
 template <typename T>
-T MARCHING_CUBES::MarchingCubes<T>::edgeIntersectionWeight(const T alpha1, const T alpha2, const T iso_alpha) const
+T SURFACE_POLYGONIZATION::MarchingCubes<T>::edgeIntersectionWeight(const T alpha1, const T alpha2,
+                                                                   const T iso_alpha) const
 {
   if (fabs(iso_alpha - alpha1) < 1e-5) {
     return 0;
@@ -70,7 +75,7 @@ T MARCHING_CUBES::MarchingCubes<T>::edgeIntersectionWeight(const T alpha1, const
 }
 
 template <typename T>
-MARCHING_CUBES::TriangleVertexTuple_t<T> MARCHING_CUBES::MarchingCubes<T>::marchCube(
+SURFACE_POLYGONIZATION::TriangleVertexTuple_t<T> SURFACE_POLYGONIZATION::MarchingCubes<T>::marchCube(
     const std::vector<Vec3<T>>& cube_vertices, const std::vector<size_t>& edge_ids, const size_t triangle_start_id,
     const std::vector<T>& scalars, const std::vector<Vec3<T>>& normals, const T iso_alpha)
 {
@@ -120,7 +125,7 @@ MARCHING_CUBES::TriangleVertexTuple_t<T> MARCHING_CUBES::MarchingCubes<T>::march
 
       triangle_vertices.push_back(std::move(vertex));
     }
-    triangle.normal = triangle.normal * static_cast<T>(MARCHING_CUBES::one_third);
+    triangle.normal = triangle.normal * static_cast<T>(SURFACE_POLYGONIZATION::one_third);
     ++triangle_id;
 
     triangles.push_back(std::move(triangle));
@@ -131,4 +136,4 @@ MARCHING_CUBES::TriangleVertexTuple_t<T> MARCHING_CUBES::MarchingCubes<T>::march
   return triangle_vertex_tuple;
 }
 
-template class MARCHING_CUBES::MarchingCubes<float>;
+template class SURFACE_POLYGONIZATION::MarchingCubes<float>;

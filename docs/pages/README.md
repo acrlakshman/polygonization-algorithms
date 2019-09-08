@@ -5,7 +5,7 @@ Overview {#mainpage}
 
 ## About
 
-Implementation of algorithms to polygonize a scalar field.
+Implemention of surface polygonization algorithms as part of learning experience targeted to extract surface of fluid interface in multiphase flow simulations.
 
 ## Source code
 

@@ -12,6 +12,10 @@
 // this list of conditions and the following disclaimer in the documentation
 // and/or other materials provided with the distribution.
 //
+// 3. Neither the name of the copyright holder nor the names of its contributors
+// may be used to endorse or promote products derived from this software without
+// specific prior written permission.
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -26,7 +30,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "marching_cubes_rectangular_domain.h"
-#include "marching_cubes/tables.h"
+#include "surface_polygonization/tables.h"
 
 #include <assert.h>
 #include <fstream>
@@ -49,7 +53,7 @@ void MarchingCubesRectangularDomain::createGrid(T x_min, T x_max, T y_min, T y_m
   m_grid.generate(x_min, x_max, y_min, y_max, z_min, z_max);
 
   m_scalar_field = new Array<Grid<T, 3>, T>(m_grid);
-  m_normal_vector_field = new Array<Grid<T, 3>, MARCHING_CUBES::Vec3<T>>(m_grid);
+  m_normal_vector_field = new Array<Grid<T, 3>, SURFACE_POLYGONIZATION::Vec3<T>>(m_grid);
 }
 
 void MarchingCubesRectangularDomain::createScalarField(ScalarObject object)
@@ -73,7 +77,7 @@ void MarchingCubesRectangularDomain::createScalarField(ScalarObject object)
   switch (object) {
     case ScalarObject::CIRCLE: {
       T radius = 0.25;
-      MARCHING_CUBES::Vec3<T> center(0.5, 0.5, 0.5);
+      SURFACE_POLYGONIZATION::Vec3<T> center(0.5, 0.5, 0.5);
 
       for (int i = i_min + 1; i < i_max - 1; ++i)
         for (int j = j_min + 1; j < j_max - 1; ++j)
@@ -87,7 +91,7 @@ void MarchingCubesRectangularDomain::createScalarField(ScalarObject object)
             // if (dist <= radius * radius) scalar_field(i, j, k) = static_cast<T>(1.);
 
             // Initialize normals to zero vector.
-            normals(i, j, k) = MARCHING_CUBES::Vec3<T>(0., 0., 0.);
+            normals(i, j, k) = SURFACE_POLYGONIZATION::Vec3<T>(0., 0., 0.);
           }
       break;
     }
@@ -103,7 +107,7 @@ void MarchingCubesRectangularDomain::createScalarField(ScalarObject object)
               scalar_field(i, j, k) = static_cast<T>(1.);
 
             // Initialize normals to zero vector.
-            normals(i, j, k) = MARCHING_CUBES::Vec3<T>(0., 0., 0.);
+            normals(i, j, k) = SURFACE_POLYGONIZATION::Vec3<T>(0., 0., 0.);
           }
 
       break;
@@ -150,7 +154,7 @@ void MarchingCubesRectangularDomain::computeVertexNormalsFromTriangles()
   for (auto &surface_triangle : surface_triangles) {
     for (auto i = 0; i < 3; ++i) {
       const auto &vertex_id = surface_triangle.vertex_ids[i];
-      surface_vertices[vertex_id].normal = MARCHING_CUBES::Vec3<T>(0., 0., 0.);
+      surface_vertices[vertex_id].normal = SURFACE_POLYGONIZATION::Vec3<T>(0., 0., 0.);
       surface_vertices[vertex_id].num_shared_triangles = static_cast<unsigned>(0);
     }
   }
@@ -190,36 +194,36 @@ void MarchingCubesRectangularDomain::polygonize(const T iso_alpha)
   int j_max = num_cells[1] + pad * mask[1];
   int k_max = num_cells[2] + pad * mask[2];
 
-  MARCHING_CUBES::MarchingCubes<T> mc;
+  SURFACE_POLYGONIZATION::MarchingCubes<T> mc;
 
-  std::vector<MARCHING_CUBES::Vec3<int>> vertex_indices(8);
+  std::vector<SURFACE_POLYGONIZATION::Vec3<int>> vertex_indices(8);
   std::vector<size_t> vertex_ids(8);
-  std::vector<MARCHING_CUBES::Vec3<T>> cube_vertices(8);
+  std::vector<SURFACE_POLYGONIZATION::Vec3<T>> cube_vertices(8);
   std::vector<size_t> edge_ids(12);
   std::vector<T> scalars(8);
-  std::vector<MARCHING_CUBES::Vec3<T>> normals(8);
+  std::vector<SURFACE_POLYGONIZATION::Vec3<T>> normals(8);
   size_t triangle_start_id = 0;
 
   for (int i = i_min; i < i_max - 1; ++i)
     for (int j = j_min; j < j_max - 1; ++j)
       for (int k = k_min; k < k_max - 1; ++k) {
         // ------ Convention-2 (Ref.: http://paulbourke.net/geometry/polygonise/)
-        // vertex_indices[0] = MARCHING_CUBES::Vec3<int>(i, j, k);
-        // vertex_indices[1] = MARCHING_CUBES::Vec3<int>(i + 1, j, k);
-        // vertex_indices[2] = MARCHING_CUBES::Vec3<int>(i + 1, j, k + 1);
-        // vertex_indices[3] = MARCHING_CUBES::Vec3<int>(i, j, k + 1);
-        // vertex_indices[4] = MARCHING_CUBES::Vec3<int>(i, j + 1, k);
-        // vertex_indices[5] = MARCHING_CUBES::Vec3<int>(i + 1, j + 1, k);
-        // vertex_indices[6] = MARCHING_CUBES::Vec3<int>(i + 1, j + 1, k + 1);
-        // vertex_indices[7] = MARCHING_CUBES::Vec3<int>(i, j + 1, k + 1);
+        // vertex_indices[0] = SURFACE_POLYGONIZATION::Vec3<int>(i, j, k);
+        // vertex_indices[1] = SURFACE_POLYGONIZATION::Vec3<int>(i + 1, j, k);
+        // vertex_indices[2] = SURFACE_POLYGONIZATION::Vec3<int>(i + 1, j, k + 1);
+        // vertex_indices[3] = SURFACE_POLYGONIZATION::Vec3<int>(i, j, k + 1);
+        // vertex_indices[4] = SURFACE_POLYGONIZATION::Vec3<int>(i, j + 1, k);
+        // vertex_indices[5] = SURFACE_POLYGONIZATION::Vec3<int>(i + 1, j + 1, k);
+        // vertex_indices[6] = SURFACE_POLYGONIZATION::Vec3<int>(i + 1, j + 1, k + 1);
+        // vertex_indices[7] = SURFACE_POLYGONIZATION::Vec3<int>(i, j + 1, k + 1);
         //--------------------
 
         for (int v_idx = 0; v_idx < 8; ++v_idx) {
           // ------ Convention-1
-          vertex_indices[v_idx] =
-              MARCHING_CUBES::Vec3<int>(i, j, k) + MARCHING_CUBES::Vec3<int>(MARCHING_CUBES::vertex_offset[v_idx][0],
-                                                                             MARCHING_CUBES::vertex_offset[v_idx][1],
-                                                                             MARCHING_CUBES::vertex_offset[v_idx][2]);
+          vertex_indices[v_idx] = SURFACE_POLYGONIZATION::Vec3<int>(i, j, k) +
+                                  SURFACE_POLYGONIZATION::Vec3<int>(SURFACE_POLYGONIZATION::vertex_offset[v_idx][0],
+                                                                    SURFACE_POLYGONIZATION::vertex_offset[v_idx][1],
+                                                                    SURFACE_POLYGONIZATION::vertex_offset[v_idx][2]);
           //--------------------
           vertex_ids[v_idx] = m_grid.index(vertex_indices[v_idx]);
           cube_vertices[v_idx] = m_grid(vertex_indices[v_idx]);
@@ -234,9 +238,10 @@ void MarchingCubesRectangularDomain::polygonize(const T iso_alpha)
         const auto triangle_vertex_tuple =
             mc.marchCube(cube_vertices, edge_ids, triangle_start_id, scalars, normals, iso_alpha);
 
-        std::vector<MARCHING_CUBES::Triangle<T>> triangles = std::get<MARCHING_CUBES::TRIANGLES>(triangle_vertex_tuple);
-        std::vector<MARCHING_CUBES::Vertex<T>> triangle_vertices =
-            std::get<MARCHING_CUBES::VERTICES>(triangle_vertex_tuple);
+        std::vector<SURFACE_POLYGONIZATION::Triangle<T>> triangles =
+            std::get<SURFACE_POLYGONIZATION::TRIANGLES>(triangle_vertex_tuple);
+        std::vector<SURFACE_POLYGONIZATION::Vertex<T>> triangle_vertices =
+            std::get<SURFACE_POLYGONIZATION::VERTICES>(triangle_vertex_tuple);
 
         triangle_start_id += triangles.size();
 

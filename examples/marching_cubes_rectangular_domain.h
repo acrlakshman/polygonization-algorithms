@@ -12,6 +12,10 @@
 // this list of conditions and the following disclaimer in the documentation
 // and/or other materials provided with the distribution.
 //
+// 3. Neither the name of the copyright holder nor the names of its contributors
+// may be used to endorse or promote products derived from this software without
+// specific prior written permission.
+//
 // THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS
 // "AS IS" AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT
 // LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR
@@ -27,11 +31,11 @@
 
 #pragma once
 
-#include "./array.h"
-#include "./grid.h"
-#include "./mat3.h"
-#include "marching_cubes/marching_cubes.h"
-#include "marching_cubes/vec3.h"
+#include "array.h"
+#include "grid.h"
+#include "mat3.h"
+#include "surface_polygonization/marching_cubes.h"
+#include "surface_polygonization/vec3.h"
 
 #include <map>
 
@@ -60,10 +64,10 @@ class MarchingCubesRectangularDomain
 
   void writeToObj(const std::string file_name);
 
-  Grid<T, 3> m_grid;                                                  //!< 3D grid.
-  Array<Grid<T, 3>, T> *m_scalar_field;                               //!< scalar field at all grid locations.
-  Array<Grid<T, 3>, MARCHING_CUBES::Vec3<T>> *m_normal_vector_field;  //!< normal vectors at all grid locations.
-  std::map<size_t, MARCHING_CUBES::Vertex<T>> surface_vertices;       //!< vertices forming polygonized field.
-  std::vector<MARCHING_CUBES::Triangle<T>> surface_triangles;         //!< surface triangles.
+  Grid<T, 3> m_grid;                                                          //!< 3D grid.
+  Array<Grid<T, 3>, T> *m_scalar_field;                                       //!< scalar field at all grid locations.
+  Array<Grid<T, 3>, SURFACE_POLYGONIZATION::Vec3<T>> *m_normal_vector_field;  //!< normal vectors at all grid locations.
+  std::map<size_t, SURFACE_POLYGONIZATION::Vertex<T>> surface_vertices;       //!< vertices forming polygonized field.
+  std::vector<SURFACE_POLYGONIZATION::Triangle<T>> surface_triangles;         //!< surface triangles.
 };
 }  // namespace EXAMPLES

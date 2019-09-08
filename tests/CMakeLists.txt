@@ -14,13 +14,13 @@ TARGET_INCLUDE_DIRECTORIES(${TEST_NAME}
 
 TARGET_LINK_LIBRARIES(${TEST_NAME}
   PUBLIC
-    marching_cubes
+    surface_polygonization
   PRIVATE
     gtest
     gtest_main
 )
 
-IF (BUILD_COVERAGE)
+IF (SP_BUILD_COVERAGE)
     TARGET_COMPILE_OPTIONS(${TEST_NAME}
       PRIVATE
         -g -O0 -fprofile-arcs -ftest-coverage
@@ -29,7 +29,7 @@ IF (BUILD_COVERAGE)
       PRIVATE
         -g -O0 -fprofile-arcs -ftest-coverage
       )
-ENDIF (BUILD_COVERAGE)
+ENDIF (SP_BUILD_COVERAGE)
 
 SET_TARGET_PROPERTIES(${TEST_NAME} PROPERTIES FOLDER "Tests")
 
