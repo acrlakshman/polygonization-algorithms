@@ -245,9 +245,9 @@ void MarchingCubesRectangularDomain::polygonize(const T iso_alpha)
 
         triangle_start_id += triangles.size();
 
-        for (auto &&triangle : triangles) surface_triangles.push_back(std::move(triangle));
+        for (auto &triangle : triangles) surface_triangles.push_back(std::move(triangle));
 
-        for (auto triangle_vertex : triangle_vertices)
+        for (auto &triangle_vertex : triangle_vertices)
           if (surface_vertices.find(triangle_vertex.id) == surface_vertices.end())
             surface_vertices[triangle_vertex.id] = std::move(triangle_vertex);
       }

@@ -56,17 +56,17 @@ SURFACE_POLYGONIZATION::Vec3<T>::Vec3() : Vec3(static_cast<T>(0), static_cast<T>
 template <typename T>
 SURFACE_POLYGONIZATION::Vec3<T>::Vec3(const Vec3<T>& v)
 {
-   m_data[0] = v.m_data[0];
-   m_data[1] = v.m_data[1];
-   m_data[2] = v.m_data[2];
+  m_data[0] = v.m_data[0];
+  m_data[1] = v.m_data[1];
+  m_data[2] = v.m_data[2];
 }
 
 template <typename T>
 SURFACE_POLYGONIZATION::Vec3<T>::Vec3(Vec3<T>&& v)
 {
-   m_data[0] = v.m_data[0];
-   m_data[1] = v.m_data[1];
-   m_data[2] = v.m_data[2];
+  m_data[0] = v.m_data[0];
+  m_data[1] = v.m_data[1];
+  m_data[2] = v.m_data[2];
 }
 
 template <typename T>
