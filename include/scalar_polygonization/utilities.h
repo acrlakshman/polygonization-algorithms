@@ -33,8 +33,9 @@
 
 #include <math.h>
 #include <string.h>
+#include <type_traits>
 
-namespace SURFACE_POLYGONIZATION
+namespace SCALAR_POLYGONIZATION
 {
 static double VSMALL = 1e-10;
 static const double one_third = 1. / 3.;
@@ -48,9 +49,15 @@ static const double one_third = 1. / 3.;
  *
  * \return number of elements.
  */
-template <typename T>
+template <typename T, typename std::enable_if<std::is_floating_point<T>::value, T>::type* = nullptr>
 static bool is_equal(const T a, const T b)
 {
   return (static_cast<T>(fabs(a - b)) <= VSMALL);
 }
-}  // namespace SURFACE_POLYGONIZATION
+
+template <typename T, typename std::enable_if<std::is_integral<T>::value, T>::type* = nullptr>
+static bool is_equal(const T a, const T b)
+{
+  return a == b;
+}
+}  // namespace SCALAR_POLYGONIZATION

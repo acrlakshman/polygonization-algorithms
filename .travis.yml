@@ -30,7 +30,7 @@ script:
     - cd build
     - CC=$INSTALL_CC CXX=$INSTALL_CXX cmake ../ -DSP_BUILD_COVERAGE:BOOL=ON -DSP_BUILD_DOCUMENTATION:BOOL=ON
     - make -j 4
-    - ./surface_polygonization_examples && ctest -R sp_unit_tests --output-on-failure
+    - ./scalar_polygonization_examples && ctest -R sp_unit_tests --output-on-failure
 
 after_success:
     - if [ "$TRAVIS_OS_NAME" = "osx" ]; then

@@ -35,8 +35,8 @@
 #include <vector>
 
 #include "mat3.h"
-#include "surface_polygonization/utilities.h"
-#include "surface_polygonization/vec3.h"
+#include "scalar_polygonization/utilities.h"
+#include "scalar_polygonization/vec3.h"
 
 namespace EXAMPLES
 {
@@ -49,7 +49,7 @@ class Grid
 {
  public:
   using value_type = T;
-  using position_type = SURFACE_POLYGONIZATION::Vec3<T>;
+  using position_type = SCALAR_POLYGONIZATION::Vec3<T>;
 
   //! Dimension.
   static constexpr int dim = DIM;
@@ -95,7 +95,7 @@ class Grid
    *
    * \return 3D position vector.
    */
-  SURFACE_POLYGONIZATION::Vec3<T>& x(const int i, const int j = 0, const int k = 0);
+  SCALAR_POLYGONIZATION::Vec3<T>& x(const int i, const int j = 0, const int k = 0);
 
   /*! Returns dimension of grid.
    *
@@ -128,7 +128,7 @@ class Grid
    *
    * \return vector of size 3.
    */
-  const SURFACE_POLYGONIZATION::Vec3<int> numCells() const;
+  const SCALAR_POLYGONIZATION::Vec3<int> numCells() const;
 
   /*! Returns total number of cells excluding ghost (padded) cells.
    *
@@ -156,11 +156,11 @@ class Grid
 
   /*! Given a node id, returns 1D index in stored array.
    *
-   * \param node_id node id of type SURFACE_POLYGONIZATION::Vec3<int>.
+   * \param node_id node id of type SCALAR_POLYGONIZATION::Vec3<int>.
    *
    * \return 1D index.
    */
-  const std::size_t index(const SURFACE_POLYGONIZATION::Vec3<int> node_id) const;
+  const std::size_t index(const SCALAR_POLYGONIZATION::Vec3<int> node_id) const;
 
   /*! Return base node id (i, j, k) that encloses given position.
    *
@@ -168,25 +168,25 @@ class Grid
    *
    * \return base node id (i, j, k).
    */
-  const SURFACE_POLYGONIZATION::Vec3<int> baseNodeId(const SURFACE_POLYGONIZATION::Vec3<T>& x) const;
+  const SCALAR_POLYGONIZATION::Vec3<int> baseNodeId(const SCALAR_POLYGONIZATION::Vec3<T>& x) const;
 
   /*! Returns cell size which is a vector of size 3.
    *
    * \return cell size.
    */
-  const SURFACE_POLYGONIZATION::Vec3<T>& dX() const;
+  const SCALAR_POLYGONIZATION::Vec3<T>& dX() const;
 
   /*! Returns one over cell size which is a vector of size 3.
    *
    * \return one over cell size.
    */
-  const SURFACE_POLYGONIZATION::Vec3<T>& oneOverDX() const;
+  const SCALAR_POLYGONIZATION::Vec3<T>& oneOverDX() const;
 
   /*! Operator overloaded to return co-ordinate values at a given 3D index.
    *
    * \return position.
    */
-  const SURFACE_POLYGONIZATION::Vec3<T>& operator()(const int i, const int j, const int k) const;
+  const SCALAR_POLYGONIZATION::Vec3<T>& operator()(const int i, const int j, const int k) const;
 
   /*! Operator overloaded to return co-ordinate values at a given 3D index.
    *
@@ -194,7 +194,7 @@ class Grid
    *
    * \return position.
    */
-  const SURFACE_POLYGONIZATION::Vec3<T>& operator()(const SURFACE_POLYGONIZATION::Vec3<int> node_id) const;
+  const SCALAR_POLYGONIZATION::Vec3<T>& operator()(const SCALAR_POLYGONIZATION::Vec3<int> node_id) const;
 
   /*! Set new padding value.
    *
@@ -223,9 +223,9 @@ class Grid
   int m_dimension, m_nx, m_ny, m_nz, m_pad;
   size_t m_total_cells;
   int m_mask[3];
-  SURFACE_POLYGONIZATION::Vec3<T> m_box_min, m_box_max;
-  SURFACE_POLYGONIZATION::Vec3<T> m_dx, m_one_over_dx;
-  std::vector<SURFACE_POLYGONIZATION::Vec3<T>> m_grid;
+  SCALAR_POLYGONIZATION::Vec3<T> m_box_min, m_box_max;
+  SCALAR_POLYGONIZATION::Vec3<T> m_dx, m_one_over_dx;
+  std::vector<SCALAR_POLYGONIZATION::Vec3<T>> m_grid;
 };
 
 template <typename T, int DIM>

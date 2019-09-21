@@ -14,7 +14,7 @@ TARGET_INCLUDE_DIRECTORIES(${TEST_NAME}
 
 TARGET_LINK_LIBRARIES(${TEST_NAME}
   PUBLIC
-    surface_polygonization
+    scalar_polygonization
   PRIVATE
     gtest
     gtest_main

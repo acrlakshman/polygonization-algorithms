@@ -30,7 +30,7 @@
 ///////////////////////////////////////////////////////////////////////////////
 
 #include "mat3.h"
-#include "surface_polygonization/utilities.h"
+#include "scalar_polygonization/utilities.h"
 
 template <typename T>
 EXAMPLES::Mat3<T>::Mat3(T a00, T a01, T a02, T a10, T a11, T a12, T a20, T a21, T a22)
@@ -65,9 +65,9 @@ const int EXAMPLES::Mat3<T>::size() const
 }
 
 template <typename T>
-const SURFACE_POLYGONIZATION::Vec3<T> EXAMPLES::Mat3<T>::dot(SURFACE_POLYGONIZATION::Vec3<T> vec) const
+const SCALAR_POLYGONIZATION::Vec3<T> EXAMPLES::Mat3<T>::dot(SCALAR_POLYGONIZATION::Vec3<T> vec) const
 {
-  SURFACE_POLYGONIZATION::Vec3<T> res;
+  SCALAR_POLYGONIZATION::Vec3<T> res;
 
   for (int i = 0; i < 3; ++i)
     for (int j = 0; j < 3; ++j) res[i] += m_data[j * 3 + i] * vec[j];
@@ -126,11 +126,11 @@ const EXAMPLES::Mat3<T> EXAMPLES::Mat3<T>::operator*(const T var) const
 template <typename T>
 bool EXAMPLES::Mat3<T>::operator==(const EXAMPLES::Mat3<T>& mat) const
 {
-  return (SURFACE_POLYGONIZATION::is_equal(m_data[0], mat[0]) && SURFACE_POLYGONIZATION::is_equal(m_data[1], mat[1]) &&
-          SURFACE_POLYGONIZATION::is_equal(m_data[2], mat[2]) && SURFACE_POLYGONIZATION::is_equal(m_data[3], mat[3]) &&
-          SURFACE_POLYGONIZATION::is_equal(m_data[4], mat[4]) && SURFACE_POLYGONIZATION::is_equal(m_data[5], mat[5]) &&
-          SURFACE_POLYGONIZATION::is_equal(m_data[6], mat[6]) && SURFACE_POLYGONIZATION::is_equal(m_data[7], mat[7]) &&
-          SURFACE_POLYGONIZATION::is_equal(m_data[8], mat[8]));
+  return (SCALAR_POLYGONIZATION::is_equal(m_data[0], mat[0]) && SCALAR_POLYGONIZATION::is_equal(m_data[1], mat[1]) &&
+          SCALAR_POLYGONIZATION::is_equal(m_data[2], mat[2]) && SCALAR_POLYGONIZATION::is_equal(m_data[3], mat[3]) &&
+          SCALAR_POLYGONIZATION::is_equal(m_data[4], mat[4]) && SCALAR_POLYGONIZATION::is_equal(m_data[5], mat[5]) &&
+          SCALAR_POLYGONIZATION::is_equal(m_data[6], mat[6]) && SCALAR_POLYGONIZATION::is_equal(m_data[7], mat[7]) &&
+          SCALAR_POLYGONIZATION::is_equal(m_data[8], mat[8]));
 }
 
 template class EXAMPLES::Mat3<int>;

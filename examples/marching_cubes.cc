@@ -29,7 +29,7 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "surface_polygonization/marching_cubes.h"
+#include "scalar_polygonization/marching_cubes.h"
 #include "marching_cubes_rectangular_domain.h"
 #include "mat3.h"
 

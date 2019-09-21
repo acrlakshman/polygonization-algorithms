@@ -29,11 +29,11 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "surface_polygonization/vec3.h"
-#include "surface_polygonization/utilities.h"
+#include "scalar_polygonization/vec3.h"
+#include "scalar_polygonization/utilities.h"
 
 template <typename T>
-SURFACE_POLYGONIZATION::Vec3<T>::Vec3(const T a, const T b, const T c)
+SCALAR_POLYGONIZATION::Vec3<T>::Vec3(const T a, const T b, const T c)
 {
   m_data[0] = a;
   m_data[1] = b;
@@ -41,7 +41,7 @@ SURFACE_POLYGONIZATION::Vec3<T>::Vec3(const T a, const T b, const T c)
 }
 
 template <typename T>
-SURFACE_POLYGONIZATION::Vec3<T>::Vec3(const std::vector<T> a)
+SCALAR_POLYGONIZATION::Vec3<T>::Vec3(const std::vector<T> a)
 {
   m_data[0] = a[0];
   m_data[1] = a[1];
@@ -49,20 +49,12 @@ SURFACE_POLYGONIZATION::Vec3<T>::Vec3(const std::vector<T> a)
 }
 
 template <typename T>
-SURFACE_POLYGONIZATION::Vec3<T>::Vec3() : Vec3(static_cast<T>(0), static_cast<T>(0), static_cast<T>(0))
+SCALAR_POLYGONIZATION::Vec3<T>::Vec3() : Vec3(static_cast<T>(0), static_cast<T>(0), static_cast<T>(0))
 {
 }
 
 template <typename T>
-SURFACE_POLYGONIZATION::Vec3<T>::Vec3(const Vec3<T>& v)
-{
-  m_data[0] = v.m_data[0];
-  m_data[1] = v.m_data[1];
-  m_data[2] = v.m_data[2];
-}
-
-template <typename T>
-SURFACE_POLYGONIZATION::Vec3<T>::Vec3(Vec3<T>&& v)
+SCALAR_POLYGONIZATION::Vec3<T>::Vec3(const Vec3<T>& v)
 {
   m_data[0] = v.m_data[0];
   m_data[1] = v.m_data[1];
@@ -70,24 +62,32 @@ SURFACE_POLYGONIZATION::Vec3<T>::Vec3(Vec3<T>&& v)
 }
 
 template <typename T>
-SURFACE_POLYGONIZATION::Vec3<T>::~Vec3()
+SCALAR_POLYGONIZATION::Vec3<T>::Vec3(Vec3<T>&& v)
+{
+  m_data[0] = v.m_data[0];
+  m_data[1] = v.m_data[1];
+  m_data[2] = v.m_data[2];
+}
+
+template <typename T>
+SCALAR_POLYGONIZATION::Vec3<T>::~Vec3()
 {
 }
 
 template <typename T>
-const int SURFACE_POLYGONIZATION::Vec3<T>::size() const
+const int SCALAR_POLYGONIZATION::Vec3<T>::size() const
 {
   return SIZE;
 }
 
 template <typename T>
-const double SURFACE_POLYGONIZATION::Vec3<T>::mag() const
+const double SCALAR_POLYGONIZATION::Vec3<T>::mag() const
 {
   return sqrt(m_data[0] * m_data[0] + m_data[1] * m_data[1] + m_data[2] * m_data[2]);
 }
 
 template <typename T>
-void SURFACE_POLYGONIZATION::Vec3<T>::normalize()
+void SCALAR_POLYGONIZATION::Vec3<T>::normalize()
 {
   const auto magnitude = this->mag();
 
@@ -96,7 +96,7 @@ void SURFACE_POLYGONIZATION::Vec3<T>::normalize()
 }
 
 template <typename T>
-const T SURFACE_POLYGONIZATION::Vec3<T>::min() const
+const T SCALAR_POLYGONIZATION::Vec3<T>::min() const
 {
   if (m_data[0] < m_data[1] && m_data[0] < m_data[2]) return m_data[0];
   if (m_data[1] < m_data[0] && m_data[1] < m_data[2]) return m_data[1];
@@ -104,61 +104,61 @@ const T SURFACE_POLYGONIZATION::Vec3<T>::min() const
 }
 
 template <typename T>
-const T SURFACE_POLYGONIZATION::Vec3<T>::operator[](const int idx) const
+const T SCALAR_POLYGONIZATION::Vec3<T>::operator[](const int idx) const
 {
   return m_data[idx];
 }
 
 template <typename T>
-T& SURFACE_POLYGONIZATION::Vec3<T>::operator[](const int idx)
+T& SCALAR_POLYGONIZATION::Vec3<T>::operator[](const int idx)
 {
   return m_data[idx];
 }
 
 template <typename T>
-void SURFACE_POLYGONIZATION::Vec3<T>::operator=(const Vec3<T>& vec)
+void SCALAR_POLYGONIZATION::Vec3<T>::operator=(const Vec3<T>& vec)
 {
   for (int i = 0; i < SIZE; ++i) m_data[i] = vec[i];
 }
 
 template <typename T>
-bool SURFACE_POLYGONIZATION::Vec3<T>::operator==(const Vec3<T>& vec) const
+bool SCALAR_POLYGONIZATION::Vec3<T>::operator==(const Vec3<T>& vec) const
 {
-  return (SURFACE_POLYGONIZATION::is_equal(m_data[0], vec[0]) && SURFACE_POLYGONIZATION::is_equal(m_data[1], vec[1]) &&
-          SURFACE_POLYGONIZATION::is_equal(m_data[2], vec[2]));
+  return (SCALAR_POLYGONIZATION::is_equal(m_data[0], vec[0]) && SCALAR_POLYGONIZATION::is_equal(m_data[1], vec[1]) &&
+          SCALAR_POLYGONIZATION::is_equal(m_data[2], vec[2]));
 }
 
 template <typename T>
-const SURFACE_POLYGONIZATION::Vec3<T> SURFACE_POLYGONIZATION::Vec3<T>::operator+(const Vec3<T>& vec) const
+const SCALAR_POLYGONIZATION::Vec3<T> SCALAR_POLYGONIZATION::Vec3<T>::operator+(const Vec3<T>& vec) const
 {
   return Vec3<T>(m_data[0] + vec[0], m_data[1] + vec[1], m_data[2] + vec[2]);
 }
 
 template <typename T>
-const SURFACE_POLYGONIZATION::Vec3<T> SURFACE_POLYGONIZATION::Vec3<T>::operator-(const Vec3<T>& vec) const
+const SCALAR_POLYGONIZATION::Vec3<T> SCALAR_POLYGONIZATION::Vec3<T>::operator-(const Vec3<T>& vec) const
 {
   return Vec3<T>(m_data[0] - vec[0], m_data[1] - vec[1], m_data[2] - vec[2]);
 }
 
 template <typename T>
-const SURFACE_POLYGONIZATION::Vec3<T> SURFACE_POLYGONIZATION::Vec3<T>::operator*(const Vec3<T>& vec) const
+const SCALAR_POLYGONIZATION::Vec3<T> SCALAR_POLYGONIZATION::Vec3<T>::operator*(const Vec3<T>& vec) const
 {
   return Vec3<T>(m_data[0] * vec[0], m_data[1] * vec[1], m_data[2] * vec[2]);
 }
 
 template <typename T>
-const SURFACE_POLYGONIZATION::Vec3<T> SURFACE_POLYGONIZATION::Vec3<T>::operator*(const T var) const
+const SCALAR_POLYGONIZATION::Vec3<T> SCALAR_POLYGONIZATION::Vec3<T>::operator*(const T var) const
 {
   return Vec3<T>(m_data[0] * var, m_data[1] * var, m_data[2] * var);
 }
 
 template <typename T>
-const SURFACE_POLYGONIZATION::Vec3<T> SURFACE_POLYGONIZATION::Vec3<T>::operator/(const Vec3<T>& vec) const
+const SCALAR_POLYGONIZATION::Vec3<T> SCALAR_POLYGONIZATION::Vec3<T>::operator/(const Vec3<T>& vec) const
 {
   return Vec3<T>(m_data[0] / vec[0], m_data[1] / vec[1], m_data[2] / vec[2]);
 }
 
-template class SURFACE_POLYGONIZATION::Vec3<int>;
-template class SURFACE_POLYGONIZATION::Vec3<float>;
-template class SURFACE_POLYGONIZATION::Vec3<double>;
-template class SURFACE_POLYGONIZATION::Vec3<size_t>;
+template class SCALAR_POLYGONIZATION::Vec3<int>;
+template class SCALAR_POLYGONIZATION::Vec3<float>;
+template class SCALAR_POLYGONIZATION::Vec3<double>;
+template class SCALAR_POLYGONIZATION::Vec3<size_t>;

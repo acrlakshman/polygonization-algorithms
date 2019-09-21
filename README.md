@@ -1,9 +1,10 @@
-##Implementation of polygonization algorithms
+Implementation of polygonization algorithms
+-------------------------------------------
 
-[![Build Status](https://travis-ci.org/acrlakshman/surface-polygonization.svg?branch=master)](https://travis-ci.org/acrlakshman/surface-polygonization)
-[![Coverage Status](https://coveralls.io/repos/github/acrlakshman/surface-polygonization/badge.svg)](https://coveralls.io/github/acrlakshman/surface-polygonization)
+[![Build Status](https://travis-ci.org/acrlakshman/scalar-polygonization.svg?branch=master)](https://travis-ci.org/acrlakshman/scalar-polygonization)
+[![Coverage Status](https://coveralls.io/repos/github/acrlakshman/scalar-polygonization/badge.svg)](https://coveralls.io/github/acrlakshman/scalar-polygonization)
 
-Implemention of surface polygonization algorithms as part of learning experience targeted to extract surface of fluid interface in multiphase flow simulations.
+Implemention of scalar polygonization algorithms as part of learning experience targeted to extract surface of fluid interface in multiphase flow simulations.
 
 * Marching cubes
   * Ref.: http://paulbourke.net/geometry/polygonise/
@@ -16,8 +17,8 @@ Implemention of surface polygonization algorithms as part of learning experience
 * Compiler that supports C++11
 
 ```sh
-git clone https://github.com/acrlakshman/surface-polygonization --recursive
-cd surface-polygonization
+git clone https://github.com/acrlakshman/scalar-polygonization --recursive
+cd scalar-polygonization
 mkdir -p build && cd build
 cmake .. && make -j 4
 ```
@@ -52,6 +53,6 @@ BSD 3-Clause License. Please check the accompanying [LICENSE] file
 [CMake]:https://github.com/Kitware/CMake
 [Doxygen]:https://github.com/doxygen/doxygen
 [lcov]:https://github.com/linux-test-project/lcov
-[Documentation]:https://acrlakshman.github.io/surface-polygonization
-[Coverage]:https://acrlakshman.github.io/surface-polygonization/coverage
-[LICENSE]:https://github.com/acrlakshman/surface-polygonization/blob/master/LICENSE
+[Documentation]:https://acrlakshman.github.io/scalar-polygonization
+[Coverage]:https://acrlakshman.github.io/scalar-polygonization/coverage
+[LICENSE]:https://github.com/acrlakshman/scalar-polygonization/blob/master/LICENSE

@@ -46,11 +46,11 @@ EXAMPLES::Grid<T, DIM>::Grid(int nx, int ny, int nz)
   else if (dim == 3)
     m_mask[1] = 1, m_mask[2] = 1;
 
-  m_box_min = SURFACE_POLYGONIZATION::Vec3<T>(INT_MIN, INT_MIN, INT_MIN);
-  m_box_max = SURFACE_POLYGONIZATION::Vec3<T>(INT_MAX, INT_MAX, INT_MAX);
+  m_box_min = SCALAR_POLYGONIZATION::Vec3<T>(INT_MIN, INT_MIN, INT_MIN);
+  m_box_max = SCALAR_POLYGONIZATION::Vec3<T>(INT_MAX, INT_MAX, INT_MAX);
 
-  m_dx = SURFACE_POLYGONIZATION::Vec3<T>(INT_MAX, INT_MAX, INT_MAX),
-  m_one_over_dx = SURFACE_POLYGONIZATION::Vec3<T>(INT_MIN, INT_MIN, INT_MIN);
+  m_dx = SCALAR_POLYGONIZATION::Vec3<T>(INT_MAX, INT_MAX, INT_MAX),
+  m_one_over_dx = SCALAR_POLYGONIZATION::Vec3<T>(INT_MIN, INT_MIN, INT_MIN);
 }
 
 template <typename T, int DIM>
@@ -71,7 +71,7 @@ EXAMPLES::Grid<T, DIM>::~Grid()
 }
 
 template <typename T, int DIM>
-SURFACE_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::x(const int i, const int j, const int k)
+SCALAR_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::x(const int i, const int j, const int k)
 {
   return m_grid[this->index(i, j, k)];
 }
@@ -95,9 +95,9 @@ const int* EXAMPLES::Grid<T, DIM>::getMask() const
 }
 
 template <typename T, int DIM>
-const SURFACE_POLYGONIZATION::Vec3<int> EXAMPLES::Grid<T, DIM>::numCells() const
+const SCALAR_POLYGONIZATION::Vec3<int> EXAMPLES::Grid<T, DIM>::numCells() const
 {
-  return SURFACE_POLYGONIZATION::Vec3<int>(m_nx, m_ny, m_nz);
+  return SCALAR_POLYGONIZATION::Vec3<int>(m_nx, m_ny, m_nz);
 }
 
 template <typename T, int DIM>
@@ -122,16 +122,16 @@ const std::size_t EXAMPLES::Grid<T, DIM>::index(const int i, const int j, const 
 }
 
 template <typename T, int DIM>
-const std::size_t EXAMPLES::Grid<T, DIM>::index(const SURFACE_POLYGONIZATION::Vec3<int> node_id) const
+const std::size_t EXAMPLES::Grid<T, DIM>::index(const SCALAR_POLYGONIZATION::Vec3<int> node_id) const
 {
   return this->index(node_id[0], node_id[1], node_id[2]);
 }
 
 template <typename T, int DIM>
-const SURFACE_POLYGONIZATION::Vec3<int> EXAMPLES::Grid<T, DIM>::baseNodeId(
-    const SURFACE_POLYGONIZATION::Vec3<T>& x) const
+const SCALAR_POLYGONIZATION::Vec3<int> EXAMPLES::Grid<T, DIM>::baseNodeId(
+    const SCALAR_POLYGONIZATION::Vec3<T>& x) const
 {
-  SURFACE_POLYGONIZATION::Vec3<int> base_node_id(INT_MAX, INT_MAX, INT_MAX);
+  SCALAR_POLYGONIZATION::Vec3<int> base_node_id(INT_MAX, INT_MAX, INT_MAX);
 
   for (int axis = 0; axis < DIM; ++axis) {
     base_node_id[axis] = floor(((x[axis] - m_box_min[axis]) * m_one_over_dx[axis]) - 0.5);
@@ -141,26 +141,26 @@ const SURFACE_POLYGONIZATION::Vec3<int> EXAMPLES::Grid<T, DIM>::baseNodeId(
 }
 
 template <typename T, int DIM>
-const SURFACE_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::dX() const
+const SCALAR_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::dX() const
 {
   return m_dx;
 }
 
 template <typename T, int DIM>
-const SURFACE_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::oneOverDX() const
+const SCALAR_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::oneOverDX() const
 {
   return m_one_over_dx;
 }
 
 template <typename T, int DIM>
-const SURFACE_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::operator()(const int i, const int j, const int k) const
+const SCALAR_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::operator()(const int i, const int j, const int k) const
 {
   return m_grid[this->index(i, j, k)];
 }
 
 template <typename T, int DIM>
-const SURFACE_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::operator()(
-    const SURFACE_POLYGONIZATION::Vec3<int> node_id) const
+const SCALAR_POLYGONIZATION::Vec3<T>& EXAMPLES::Grid<T, DIM>::operator()(
+    const SCALAR_POLYGONIZATION::Vec3<int> node_id) const
 {
   return m_grid[this->index(node_id)];
 }
@@ -191,11 +191,11 @@ void EXAMPLES::Grid<T, DIM>::generate(T x_min, T x_max, T y_min, T y_max, T z_mi
 
   for (int i = 0; i < DIM; ++i) domain_min_new[i] = domain_min[i] + (m_dx[i] * 0.5) - (m_dx[i] * m_mask[i]);
 
-  SURFACE_POLYGONIZATION::Vec3<T> elem;
+  SCALAR_POLYGONIZATION::Vec3<T> elem;
 
   int i_min = -m_pad * m_mask[0], j_min = -m_pad * m_mask[1], k_min = -m_pad * m_mask[2];
 
-  SURFACE_POLYGONIZATION::Vec3<int> vec;
+  SCALAR_POLYGONIZATION::Vec3<int> vec;
 
   for (int i = i_min; i < m_nx + m_pad * m_mask[0]; ++i) {
     for (int j = j_min; j < m_ny + m_pad * m_mask[1]; ++j) {
