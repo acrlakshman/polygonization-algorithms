@@ -29,14 +29,14 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "surface_polygonization/vec3.h"
-#include "surface_polygonization/utilities.h"
+#include "scalar_polygonization/vec3.h"
+#include "scalar_polygonization/utilities.h"
 
 #include <gtest/gtest.h>
 
-TEST(SURFACE_POLYGONIZATION, VEC3_INT)
+TEST(SCALAR_POLYGONIZATION, VEC3_INT)
 {
-  SURFACE_POLYGONIZATION::Vec3<int> vec3;
+  SCALAR_POLYGONIZATION::Vec3<int> vec3;
 
   EXPECT_TRUE(vec3.size() == 3);
 
@@ -45,7 +45,7 @@ TEST(SURFACE_POLYGONIZATION, VEC3_INT)
   vec3[2] = 2;
   EXPECT_TRUE(vec3.min() == -1);
 
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3.mag(), 2.449489742783178));
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3.mag(), 2.449489742783178));
 
   vec3[0] = 9;
   EXPECT_TRUE(vec3[0] == 9);
@@ -53,7 +53,7 @@ TEST(SURFACE_POLYGONIZATION, VEC3_INT)
   const int i = vec3[0];
   EXPECT_TRUE(i == 9);
 
-  SURFACE_POLYGONIZATION::Vec3<int> vec_other;
+  SCALAR_POLYGONIZATION::Vec3<int> vec_other;
   vec_other[0] = 1, vec_other[1] = 2, vec_other[2] = 3;
 
   // Assign vec_other to vec3.
@@ -63,96 +63,96 @@ TEST(SURFACE_POLYGONIZATION, VEC3_INT)
   EXPECT_TRUE(vec3 == vec_other);
 
   // Constructor with 3 input arguments.
-  SURFACE_POLYGONIZATION::Vec3<int> vec_3(1, 1, 4);
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec_3[0], 1));
+  SCALAR_POLYGONIZATION::Vec3<int> vec_3(1, 1, 4);
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec_3[0], 1));
 
   // Overloaded `-` operator.
-  SURFACE_POLYGONIZATION::Vec3<int> vec3_1 = vec_3 - vec3;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_1[0], 0) && SURFACE_POLYGONIZATION::is_equal(vec3_1[1], -1) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_1[2], 1));
+  SCALAR_POLYGONIZATION::Vec3<int> vec3_1 = vec_3 - vec3;
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_1[0], 0) && SCALAR_POLYGONIZATION::is_equal(vec3_1[1], -1) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_1[2], 1));
 
   // Overloaded `*` operator.
-  SURFACE_POLYGONIZATION::Vec3<int> vec3_mult = vec_3 * vec3;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_mult[0], 1 * 1) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_mult[1], 1 * 2) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_mult[2], 4 * 3));
+  SCALAR_POLYGONIZATION::Vec3<int> vec3_mult = vec_3 * vec3;
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_mult[0], 1 * 1) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_mult[1], 1 * 2) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_mult[2], 4 * 3));
 
   vec3_mult = vec_3 * 2;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_mult[0], 1 * 2) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_mult[1], 1 * 2) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_mult[2], 4 * 2));
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_mult[0], 1 * 2) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_mult[1], 1 * 2) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_mult[2], 4 * 2));
 
   // Overloaded `/` operator.
-  SURFACE_POLYGONIZATION::Vec3<int> vec3_div = vec_3 / vec3;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_div[0], 1 / 1) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_div[1], 1 / 2) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_div[2], 4 / 3));
+  SCALAR_POLYGONIZATION::Vec3<int> vec3_div = vec_3 / vec3;
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_div[0], 1 / 1) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_div[1], 1 / 2) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_div[2], 4 / 3));
 
   // Instantiate vec3 object using standard vector.
-  SURFACE_POLYGONIZATION::Vec3<int> vec3_using_vector(std::vector<int>{0, 1, 2});
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_using_vector[0], 0) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_using_vector[1], 1) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_using_vector[2], 2));
+  SCALAR_POLYGONIZATION::Vec3<int> vec3_using_vector(std::vector<int>{0, 1, 2});
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_using_vector[0], 0) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_using_vector[1], 1) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_using_vector[2], 2));
 }
 
-TEST(SURFACE_POLYGONIZATION, VEC3_DOUBLE)
+TEST(SCALAR_POLYGONIZATION, VEC3_DOUBLE)
 {
-  SURFACE_POLYGONIZATION::Vec3<double> vec3;
+  SCALAR_POLYGONIZATION::Vec3<double> vec3;
 
   EXPECT_TRUE(vec3.size() == 3);
 
   vec3[0] = -1.9;
   vec3[1] = 1.2;
   vec3[2] = 2.1;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3.min(), -1.9));
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3.min(), -1.9));
 
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3.mag(), 3.0757112998459397));
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3.mag(), 3.0757112998459397));
 
   vec3[0] = 9.;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3[0], 9.));
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3[0], 9.));
 
   const double i = vec3[0];
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(i, 9.));
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(i, 9.));
 
-  SURFACE_POLYGONIZATION::Vec3<double> vec_other;
+  SCALAR_POLYGONIZATION::Vec3<double> vec_other;
   vec_other[0] = 1.1, vec_other[1] = 2.2, vec_other[2] = 3.3;
 
   // Assign vec_other to vec3.
   vec3 = vec_other;
-  for (int i = 0; i < 3; ++i) EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec_other[i], vec3[i]));
+  for (int i = 0; i < 3; ++i) EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec_other[i], vec3[i]));
 
   EXPECT_TRUE(vec3 == vec_other);
 
   // Constructor with 3 input arguments.
-  SURFACE_POLYGONIZATION::Vec3<double> vec_3(1.1, 2.1, 3.1);
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec_3[0], 1.1));
+  SCALAR_POLYGONIZATION::Vec3<double> vec_3(1.1, 2.1, 3.1);
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec_3[0], 1.1));
 
   // Overloaded `-` operator.
-  SURFACE_POLYGONIZATION::Vec3<double> vec3_1 = vec_3 - vec3;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_1[0], 0.) && SURFACE_POLYGONIZATION::is_equal(vec3_1[1], -0.1) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_1[2], -0.2));
+  SCALAR_POLYGONIZATION::Vec3<double> vec3_1 = vec_3 - vec3;
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_1[0], 0.) && SCALAR_POLYGONIZATION::is_equal(vec3_1[1], -0.1) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_1[2], -0.2));
 
   // Overloaded `*` operator.
-  SURFACE_POLYGONIZATION::Vec3<double> vec3_mult = vec_3 * vec3;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_mult[0], 1.1 * 1.1) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_mult[1], 2.1 * 2.2) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_mult[2], 3.1 * 3.3));
+  SCALAR_POLYGONIZATION::Vec3<double> vec3_mult = vec_3 * vec3;
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_mult[0], 1.1 * 1.1) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_mult[1], 2.1 * 2.2) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_mult[2], 3.1 * 3.3));
 
   vec3_mult = vec_3 * 2.;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_mult[0], 1.1 * 2) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_mult[1], 2.1 * 2) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_mult[2], 3.1 * 2));
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_mult[0], 1.1 * 2) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_mult[1], 2.1 * 2) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_mult[2], 3.1 * 2));
 
   // Overloaded output operator.
   // Overloaded `/` operator.
-  SURFACE_POLYGONIZATION::Vec3<double> vec3_div = vec_3 / vec3;
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_div[0], 1.1 / 1.1) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_div[1], 2.1 / 2.2) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_div[2], 3.1 / 3.3));
+  SCALAR_POLYGONIZATION::Vec3<double> vec3_div = vec_3 / vec3;
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_div[0], 1.1 / 1.1) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_div[1], 2.1 / 2.2) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_div[2], 3.1 / 3.3));
 
   // Instantiate vec3 object using standard vector.
-  SURFACE_POLYGONIZATION::Vec3<double> vec3_using_vector(std::vector<double>{0.2, 1.34, 2.12});
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(vec3_using_vector[0], 0.2) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_using_vector[1], 1.34) &&
-              SURFACE_POLYGONIZATION::is_equal(vec3_using_vector[2], 2.12));
+  SCALAR_POLYGONIZATION::Vec3<double> vec3_using_vector(std::vector<double>{0.2, 1.34, 2.12});
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(vec3_using_vector[0], 0.2) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_using_vector[1], 1.34) &&
+              SCALAR_POLYGONIZATION::is_equal(vec3_using_vector[2], 2.12));
 }

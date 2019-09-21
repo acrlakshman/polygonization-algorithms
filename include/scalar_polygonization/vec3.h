@@ -34,7 +34,7 @@
 #include <iostream>
 #include <vector>
 
-namespace SURFACE_POLYGONIZATION
+namespace SCALAR_POLYGONIZATION
 {
 /*! \class Vec3
  *
@@ -196,4 +196,4 @@ class Vec3
   T m_data[SIZE];
 };
 
-}  // namespace SURFACE_POLYGONIZATION
+}  // namespace SCALAR_POLYGONIZATION

@@ -34,8 +34,8 @@
 #include "array.h"
 #include "grid.h"
 #include "mat3.h"
-#include "surface_polygonization/marching_cubes.h"
-#include "surface_polygonization/vec3.h"
+#include "scalar_polygonization/marching_cubes.h"
+#include "scalar_polygonization/vec3.h"
 
 #include <map>
 
@@ -66,8 +66,8 @@ class MarchingCubesRectangularDomain
 
   Grid<T, 3> m_grid;                                                          //!< 3D grid.
   Array<Grid<T, 3>, T> *m_scalar_field;                                       //!< scalar field at all grid locations.
-  Array<Grid<T, 3>, SURFACE_POLYGONIZATION::Vec3<T>> *m_normal_vector_field;  //!< normal vectors at all grid locations.
-  std::map<size_t, SURFACE_POLYGONIZATION::Vertex<T>> surface_vertices;       //!< vertices forming polygonized field.
-  std::vector<SURFACE_POLYGONIZATION::Triangle<T>> surface_triangles;         //!< surface triangles.
+  Array<Grid<T, 3>, SCALAR_POLYGONIZATION::Vec3<T>> *m_normal_vector_field;  //!< normal vectors at all grid locations.
+  std::map<size_t, SCALAR_POLYGONIZATION::Vertex<T>> surface_vertices;       //!< vertices forming polygonized field.
+  std::vector<SCALAR_POLYGONIZATION::Triangle<T>> surface_triangles;         //!< surface triangles.
 };
 }  // namespace EXAMPLES

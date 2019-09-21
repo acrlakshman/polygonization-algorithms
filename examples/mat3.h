@@ -33,7 +33,7 @@
 
 #include <iostream>
 
-#include "surface_polygonization/vec3.h"
+#include "scalar_polygonization/vec3.h"
 
 namespace EXAMPLES
 {
@@ -83,7 +83,7 @@ class Mat3
    *
    * \return Vec3.
    */
-  const SURFACE_POLYGONIZATION::Vec3<T> dot(const SURFACE_POLYGONIZATION::Vec3<T> vec) const;
+  const SCALAR_POLYGONIZATION::Vec3<T> dot(const SCALAR_POLYGONIZATION::Vec3<T> vec) const;
 
   /*! Overloaded subscript operator that returns a reference.
    *

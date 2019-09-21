@@ -29,23 +29,23 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "surface_polygonization/marching_cubes.h"
-#include "surface_polygonization/tables.h"
+#include "scalar_polygonization/marching_cubes.h"
+#include "scalar_polygonization/tables.h"
 
 #include <iostream>
 
 template <typename T>
-SURFACE_POLYGONIZATION::MarchingCubes<T>::MarchingCubes()
+SCALAR_POLYGONIZATION::MarchingCubes<T>::MarchingCubes()
 {
 }
 
 template <typename T>
-SURFACE_POLYGONIZATION::MarchingCubes<T>::~MarchingCubes()
+SCALAR_POLYGONIZATION::MarchingCubes<T>::~MarchingCubes()
 {
 }
 
 template <typename T>
-std::vector<size_t> SURFACE_POLYGONIZATION::MarchingCubes<T>::vertexToEdgeIds(const std::size_t offset,
+std::vector<size_t> SCALAR_POLYGONIZATION::MarchingCubes<T>::vertexToEdgeIds(const std::size_t offset,
                                                                               const std::vector<size_t>& vertex_ids)
 {
   std::vector<size_t> edge_ids(12);
@@ -59,7 +59,7 @@ std::vector<size_t> SURFACE_POLYGONIZATION::MarchingCubes<T>::vertexToEdgeIds(co
 }
 
 template <typename T>
-T SURFACE_POLYGONIZATION::MarchingCubes<T>::edgeIntersectionWeight(const T alpha1, const T alpha2,
+T SCALAR_POLYGONIZATION::MarchingCubes<T>::edgeIntersectionWeight(const T alpha1, const T alpha2,
                                                                    const T iso_alpha) const
 {
   if (fabs(iso_alpha - alpha1) < 1e-5) {
@@ -75,7 +75,7 @@ T SURFACE_POLYGONIZATION::MarchingCubes<T>::edgeIntersectionWeight(const T alpha
 }
 
 template <typename T>
-SURFACE_POLYGONIZATION::TriangleVertexTuple_t<T> SURFACE_POLYGONIZATION::MarchingCubes<T>::marchCube(
+SCALAR_POLYGONIZATION::TriangleVertexTuple_t<T> SCALAR_POLYGONIZATION::MarchingCubes<T>::marchCube(
     const std::vector<Vec3<T>>& cube_vertices, const std::vector<size_t>& edge_ids, const size_t triangle_start_id,
     const std::vector<T>& scalars, const std::vector<Vec3<T>>& normals, const T iso_alpha)
 {
@@ -125,7 +125,7 @@ SURFACE_POLYGONIZATION::TriangleVertexTuple_t<T> SURFACE_POLYGONIZATION::Marchin
 
       triangle_vertices.push_back(std::move(vertex));
     }
-    triangle.normal = triangle.normal * static_cast<T>(SURFACE_POLYGONIZATION::one_third);
+    triangle.normal = triangle.normal * static_cast<T>(SCALAR_POLYGONIZATION::one_third);
     ++triangle_id;
 
     triangles.push_back(std::move(triangle));
@@ -136,4 +136,4 @@ SURFACE_POLYGONIZATION::TriangleVertexTuple_t<T> SURFACE_POLYGONIZATION::Marchin
   return triangle_vertex_tuple;
 }
 
-template class SURFACE_POLYGONIZATION::MarchingCubes<float>;
+template class SCALAR_POLYGONIZATION::MarchingCubes<float>;

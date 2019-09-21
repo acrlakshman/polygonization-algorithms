@@ -35,14 +35,14 @@
 
 #pragma once
 
-#include "surface_polygonization/utilities.h"
-#include "surface_polygonization/vec3.h"
+#include "scalar_polygonization/utilities.h"
+#include "scalar_polygonization/vec3.h"
 
 #include <limits.h>
 #include <tuple>
 #include <vector>
 
-namespace SURFACE_POLYGONIZATION
+namespace SCALAR_POLYGONIZATION
 {
 enum Mesh : unsigned int { TRIANGLES, VERTICES };
 
@@ -293,4 +293,4 @@ class MarchingCubes
                                      const size_t triangle_start_id, const std::vector<T>& scalars,
                                      const std::vector<Vec3<T>>& normals, const T iso_alpha);
 };
-}  // namespace SURFACE_POLYGONIZATION
+}  // namespace SCALAR_POLYGONIZATION

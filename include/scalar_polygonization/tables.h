@@ -35,7 +35,7 @@
 
 #pragma once
 
-namespace SURFACE_POLYGONIZATION
+namespace SCALAR_POLYGONIZATION
 {
 // For Convention-1
 static const int edge_id_to_vertex_id_base_map[12] = {0, 1, 3, 0, 4, 5, 7, 4, 0, 1, 2, 3};
@@ -346,4 +346,4 @@ static const int triangle_table[256][16] = {{-1, -1, -1, -1, -1, -1, -1, -1, -1,
                                             {0, 9, 1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                                             {0, 3, 8, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1},
                                             {-1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1}};
-}  // namespace SURFACE_POLYGONIZATION
+}  // namespace SCALAR_POLYGONIZATION

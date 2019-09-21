@@ -29,29 +29,29 @@
 // OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 ///////////////////////////////////////////////////////////////////////////////
 
-#include "surface_polygonization/marching_cubes.h"
-#include "surface_polygonization/utilities.h"
-#include "surface_polygonization/vec3.h"
+#include "scalar_polygonization/marching_cubes.h"
+#include "scalar_polygonization/utilities.h"
+#include "scalar_polygonization/vec3.h"
 
 #include <gtest/gtest.h>
 
 #include <iostream>
 #include <vector>
 
-namespace SP = SURFACE_POLYGONIZATION;
+namespace SP = SCALAR_POLYGONIZATION;
 
-TEST(SURFACE_POLYGONIZATION, SURFACE_POLYGONIZATION)
+TEST(SCALAR_POLYGONIZATION, SCALAR_POLYGONIZATION)
 {
   using T = float;
 
-  SURFACE_POLYGONIZATION::MarchingCubes<T> mc;
+  SCALAR_POLYGONIZATION::MarchingCubes<T> mc;
 
   auto vertex_ids = std::vector<std::size_t>{0, 1, 2, 3, 4, 5, 6, 7};
   auto edge_ids_ref = std::vector<std::size_t>{0, 12, 3, 11, 4, 16, 7, 15, 22, 23, 24, 25};
   const auto edge_ids = mc.vertexToEdgeIds(10, vertex_ids);
 
   EXPECT_TRUE(std::equal(edge_ids.begin(), edge_ids.end(), edge_ids_ref.begin()));
-  EXPECT_TRUE(SURFACE_POLYGONIZATION::is_equal(mc.edgeIntersectionWeight(0, 1, 0.5), static_cast<T>(0.5)));
+  EXPECT_TRUE(SCALAR_POLYGONIZATION::is_equal(mc.edgeIntersectionWeight(0, 1, 0.5), static_cast<T>(0.5)));
 
   std::vector<SP::Vec3<T>> cube_vertices{SP::Vec3<T>(0, 0, 0), SP::Vec3<T>(1, 0, 0), SP::Vec3<T>(1, 1, 0),
                                          SP::Vec3<T>(0, 1, 0), SP::Vec3<T>(0, 0, 1), SP::Vec3<T>(1, 0, 1),
@@ -64,8 +64,8 @@ TEST(SURFACE_POLYGONIZATION, SURFACE_POLYGONIZATION)
 
   const auto triangle_vertex_tuple = mc.marchCube(cube_vertices, edge_ids, triangle_start_id, scalars, normals, 0.5);
 
-  const auto triangles = std::get<SURFACE_POLYGONIZATION::TRIANGLES>(triangle_vertex_tuple);
-  const auto vertices = std::get<SURFACE_POLYGONIZATION::VERTICES>(triangle_vertex_tuple);
+  const auto triangles = std::get<SCALAR_POLYGONIZATION::TRIANGLES>(triangle_vertex_tuple);
+  const auto vertices = std::get<SCALAR_POLYGONIZATION::VERTICES>(triangle_vertex_tuple);
 
   EXPECT_TRUE(triangles.size() == static_cast<size_t>(2));
   EXPECT_TRUE(vertices.size() == static_cast<size_t>(6));

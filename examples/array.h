@@ -35,7 +35,7 @@
 #include <vector>
 
 #include "grid.h"
-#include "surface_polygonization/vec3.h"
+#include "scalar_polygonization/vec3.h"
 
 namespace EXAMPLES
 {
@@ -77,7 +77,7 @@ class Array
    *
    * \return vector of size 3.
    */
-  const SURFACE_POLYGONIZATION::Vec3<int> numCells() const;
+  const SCALAR_POLYGONIZATION::Vec3<int> numCells() const;
 
   /*! Get data.
    *
@@ -123,19 +123,19 @@ class Array
 
   /*! Overloaded operator to return value of array using 3D cell index.
    *
-   * \param node_id node id of type SURFACE_POLYGONIZATION::Vec3<int>.
+   * \param node_id node id of type SCALAR_POLYGONIZATION::Vec3<int>.
    *
    * \return value at given 3D cell index.
    */
-  const T_ARRAY &operator()(const SURFACE_POLYGONIZATION::Vec3<int> node_id) const;
+  const T_ARRAY &operator()(const SCALAR_POLYGONIZATION::Vec3<int> node_id) const;
 
   /*! Overloaded operator to return value of array using 3D cell index.
    *
-   * \param node_id node id of type SURFACE_POLYGONIZATION::Vec3<int>.
+   * \param node_id node id of type SCALAR_POLYGONIZATION::Vec3<int>.
    *
    * \return value at given 3D cell index.
    */
-  T_ARRAY &operator()(const SURFACE_POLYGONIZATION::Vec3<int> node_id);
+  T_ARRAY &operator()(const SCALAR_POLYGONIZATION::Vec3<int> node_id);
 
   /*! Overloaded operator to assign values.
    *
