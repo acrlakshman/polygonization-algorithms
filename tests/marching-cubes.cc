@@ -56,13 +56,12 @@ TEST(SCALAR_POLYGONIZATION, SCALAR_POLYGONIZATION)
   std::vector<SP::Vec3<T>> cube_vertices{SP::Vec3<T>(0, 0, 0), SP::Vec3<T>(1, 0, 0), SP::Vec3<T>(1, 1, 0),
                                          SP::Vec3<T>(0, 1, 0), SP::Vec3<T>(0, 0, 1), SP::Vec3<T>(1, 0, 1),
                                          SP::Vec3<T>(1, 1, 1), SP::Vec3<T>(0, 1, 1)};
-  std::size_t triangle_start_id = 0;
   std::vector<T> scalars{0, 0, 1, 1, 0, 0, 1, 1};
   std::vector<SP::Vec3<T>> normals{SP::Vec3<T>(0, 0, 0), SP::Vec3<T>(0, 0, 0), SP::Vec3<T>(0, 1, 0),
                                    SP::Vec3<T>(0, 1, 0), SP::Vec3<T>(0, 0, 0), SP::Vec3<T>(0, 0, 0),
                                    SP::Vec3<T>(0, 1, 0), SP::Vec3<T>(0, 1, 0)};
 
-  const auto triangle_vertex_tuple = mc.marchCube(cube_vertices, edge_ids, triangle_start_id, scalars, normals, 0.5);
+  const auto triangle_vertex_tuple = mc.marchCube(cube_vertices, edge_ids, scalars, normals, 0.5);
 
   const auto triangles = std::get<SCALAR_POLYGONIZATION::TRIANGLES>(triangle_vertex_tuple);
   const auto vertices = std::get<SCALAR_POLYGONIZATION::VERTICES>(triangle_vertex_tuple);

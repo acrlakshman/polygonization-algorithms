@@ -46,7 +46,7 @@ SCALAR_POLYGONIZATION::MarchingCubes<T>::~MarchingCubes()
 
 template <typename T>
 std::vector<size_t> SCALAR_POLYGONIZATION::MarchingCubes<T>::vertexToEdgeIds(const std::size_t offset,
-                                                                              const std::vector<size_t>& vertex_ids)
+                                                                             const std::vector<size_t>& vertex_ids)
 {
   std::vector<size_t> edge_ids(12);
 
@@ -60,7 +60,7 @@ std::vector<size_t> SCALAR_POLYGONIZATION::MarchingCubes<T>::vertexToEdgeIds(con
 
 template <typename T>
 T SCALAR_POLYGONIZATION::MarchingCubes<T>::edgeIntersectionWeight(const T alpha1, const T alpha2,
-                                                                   const T iso_alpha) const
+                                                                  const T iso_alpha) const
 {
   if (fabs(iso_alpha - alpha1) < 1e-5) {
     return 0;
@@ -76,8 +76,8 @@ T SCALAR_POLYGONIZATION::MarchingCubes<T>::edgeIntersectionWeight(const T alpha1
 
 template <typename T>
 SCALAR_POLYGONIZATION::TriangleVertexTuple_t<T> SCALAR_POLYGONIZATION::MarchingCubes<T>::marchCube(
-    const std::vector<Vec3<T>>& cube_vertices, const std::vector<size_t>& edge_ids, const size_t triangle_start_id,
-    const std::vector<T>& scalars, const std::vector<Vec3<T>>& normals, const T iso_alpha)
+    const std::vector<Vec3<T>>& cube_vertices, const std::vector<size_t>& edge_ids, const std::vector<T>& scalars,
+    const std::vector<Vec3<T>>& normals, const T iso_alpha)
 {
   std::vector<Triangle<T>> triangles;
   std::vector<Vertex<T>> triangle_vertices;
@@ -110,7 +110,6 @@ SCALAR_POLYGONIZATION::TriangleVertexTuple_t<T> SCALAR_POLYGONIZATION::MarchingC
   }
 
   // Create triangles.
-  auto triangle_id = triangle_start_id;
   for (int i_tri = 0; triangle_table[vertex_flag][i_tri] != -1; i_tri += 3) {
     Triangle<T> triangle;
     for (int i_vert = 0; i_vert < 3; ++i_vert) {
@@ -126,7 +125,6 @@ SCALAR_POLYGONIZATION::TriangleVertexTuple_t<T> SCALAR_POLYGONIZATION::MarchingC
       triangle_vertices.push_back(std::move(vertex));
     }
     triangle.normal = triangle.normal * static_cast<T>(SCALAR_POLYGONIZATION::one_third);
-    ++triangle_id;
 
     triangles.push_back(std::move(triangle));
   }

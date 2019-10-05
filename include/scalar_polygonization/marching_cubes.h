@@ -53,15 +53,21 @@ template <typename T>
 class Vertex
 {
  public:
-  Vertex() : id(ULONG_MAX), obj_id(ULONG_MAX), pos(Vec3<T>{}), normal(Vec3<T>{}), num_shared_triangles(0) {}
+  Vertex() : mask(0), id(ULONG_MAX), obj_id(ULONG_MAX), pos(Vec3<T>{}), normal(Vec3<T>{}), num_shared_triangles(0) {}
 
   Vertex(const Vertex<T>& v)
-      : id(v.id), obj_id(v.obj_id), pos(v.pos), normal(v.normal), num_shared_triangles(v.num_shared_triangles)
+      : mask(v.mask),
+        id(v.id),
+        obj_id(v.obj_id),
+        pos(v.pos),
+        normal(v.normal),
+        num_shared_triangles(v.num_shared_triangles)
   {
   }
 
   Vertex(Vertex<T>&& v)
-      : id(std::move(v.id)),
+      : mask(std::move(v.mask)),
+        id(std::move(v.id)),
         obj_id(std::move(v.obj_id)),
         pos(std::move(v.pos)),
         normal(std::move(v.normal)),
@@ -71,22 +77,27 @@ class Vertex
 
   ~Vertex() {}
 
-  void operator=(const Vertex<T>& v) {
-     id = v.id;
-     obj_id = v.obj_id;
-     pos = v.pos;
-     normal = v.normal;
-     num_shared_triangles = v.num_shared_triangles;
+  void operator=(const Vertex<T>& v)
+  {
+    mask = v.mask;
+    id = v.id;
+    obj_id = v.obj_id;
+    pos = v.pos;
+    normal = v.normal;
+    num_shared_triangles = v.num_shared_triangles;
   }
 
-  void operator=(const Vertex<T>&& v) {
-     id = v.id;
-     obj_id = v.obj_id;
-     pos = v.pos;
-     normal = v.normal;
-     num_shared_triangles = v.num_shared_triangles;
+  void operator=(const Vertex<T>&& v)
+  {
+    mask = v.mask;
+    id = v.id;
+    obj_id = v.obj_id;
+    pos = v.pos;
+    normal = v.normal;
+    num_shared_triangles = v.num_shared_triangles;
   }
 
+  int mask;                       //! Mask to denote custom type on vertex. (e.g. boundary vs internal).
   std::size_t id;                 //!< Unique id of a vertex.
   std::size_t obj_id;             //!< Reindexed id to write to obj. Index starts with 1.
   Vec3<T> pos;                    //!< Position of a vertex.
@@ -282,7 +293,6 @@ class MarchingCubes
    *
    * \param cube_vertices position vectors of 8 vertices of a cube.
    * \param edge_ids ids of 12 edges of a cube.
-   * \param triangle_start_id id assigned to first triangle created in this cube.
    * \param scalars vector of size 8 with scalar values at all vertices of a cube.
    * \param normals vector of size 8 with normal vectors at all vertices of a cube.
    * \param iso_alpha value for which iso-surface needs to be extracted.
@@ -290,7 +300,7 @@ class MarchingCubes
    * \return tuple of triangles and triangle corners(/vertices).
    */
   TriangleVertexTuple_t<T> marchCube(const std::vector<Vec3<T>>& cube_vertices, const std::vector<size_t>& edge_ids,
-                                     const size_t triangle_start_id, const std::vector<T>& scalars,
-                                     const std::vector<Vec3<T>>& normals, const T iso_alpha);
+                                     const std::vector<T>& scalars, const std::vector<Vec3<T>>& normals,
+                                     const T iso_alpha);
 };
 }  // namespace SCALAR_POLYGONIZATION

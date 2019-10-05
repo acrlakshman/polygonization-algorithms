@@ -222,8 +222,8 @@ void MarchingCubesRectangularDomain::polygonize(const T iso_alpha)
           // ------ Convention-1
           vertex_indices[v_idx] = SCALAR_POLYGONIZATION::Vec3<int>(i, j, k) +
                                   SCALAR_POLYGONIZATION::Vec3<int>(SCALAR_POLYGONIZATION::vertex_offset[v_idx][0],
-                                                                    SCALAR_POLYGONIZATION::vertex_offset[v_idx][1],
-                                                                    SCALAR_POLYGONIZATION::vertex_offset[v_idx][2]);
+                                                                   SCALAR_POLYGONIZATION::vertex_offset[v_idx][1],
+                                                                   SCALAR_POLYGONIZATION::vertex_offset[v_idx][2]);
           //--------------------
           vertex_ids[v_idx] = m_grid.index(vertex_indices[v_idx]);
           cube_vertices[v_idx] = m_grid(vertex_indices[v_idx]);
@@ -235,8 +235,7 @@ void MarchingCubesRectangularDomain::polygonize(const T iso_alpha)
         edge_ids = mc.vertexToEdgeIds(m_grid.size(), vertex_ids);
 
         // Run marching cubes algorithm.
-        const auto triangle_vertex_tuple =
-            mc.marchCube(cube_vertices, edge_ids, triangle_start_id, scalars, normals, iso_alpha);
+        const auto triangle_vertex_tuple = mc.marchCube(cube_vertices, edge_ids, scalars, normals, iso_alpha);
 
         std::vector<SCALAR_POLYGONIZATION::Triangle<T>> triangles =
             std::get<SCALAR_POLYGONIZATION::TRIANGLES>(triangle_vertex_tuple);
